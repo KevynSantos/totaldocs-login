@@ -1,13 +1,13 @@
 import axios from 'axios'
 import {
-  REACT_APP_API_URL,
-  REACT_APP_TOTALDOCS_CORE_API_URL,
   getToken,
   handleRemoveStorage,
   handleRetry,
   storageToken,
 } from './utilsapi.js'
 import { AUTHENTICATE, GET_ME, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
+import {  REACT_APP_API_URL,
+  REACT_APP_TOTALDOCS_CORE_API_URL} from './config.js'
 
 export const handleLogin = async (
   company: string,

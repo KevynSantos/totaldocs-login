@@ -2,7 +2,6 @@ import * as jose from 'jose';
 import { refreshToken } from './auth.js';
 import { STORAGE_KEY_COMPANY, STORAGE_KEY_EMAIL, STORAGE_KEY_ID_EMPRESA, STORAGE_KEY_KEEP_LOGGED, STORAGE_KEY_LOCALE, STORAGE_KEY_ROLE, STORAGE_KEY_TIMEZONE, STORAGE_KEY_TOKEN, STORAGE_KEY_USERNAME, STORAGE_KEY_USER_EXP, STORAGE_KEY_USER_ID, } from './constants/api.js';
 import { AxiosError } from 'axios';
-export const { REACT_APP_API_URL, REACT_APP_TOTALDOCS_CORE_API_URL } = process.env;
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 10000;
 export const handleRetry = async (fn, retries = MAX_RETRIES) => {

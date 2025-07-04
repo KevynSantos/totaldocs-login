@@ -1,5 +1,4 @@
 import * as jose from 'jose';
-export declare const REACT_APP_API_URL: string | undefined, REACT_APP_TOTALDOCS_CORE_API_URL: string | undefined;
 export declare const handleRetry: (fn: () => Promise<any>, retries?: number) => Promise<any>;
 export declare const decodeToken: (token: string) => jose.JWTPayload | null;
 export declare const isExpiredToken: () => boolean | 0;
