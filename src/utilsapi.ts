@@ -15,7 +15,6 @@ import {
 } from './constants/api.js'
 import { AxiosError } from 'axios'
 
-export const { REACT_APP_API_URL, REACT_APP_TOTALDOCS_CORE_API_URL } = process.env
 
 const MAX_RETRIES = 3
 const RETRY_DELAY = 10000
