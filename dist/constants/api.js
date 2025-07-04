@@ -1,0 +1,12 @@
+export const STORAGE_KEY_TOKEN = 'token';
+export const STORAGE_KEY_USERNAME = 'username';
+export const STORAGE_KEY_ROLE = 'role';
+export const STORAGE_KEY_USER_EXP = 'userExp';
+export const STORAGE_KEY_ID_EMPRESA = 'idEmpresa';
+export const STORAGE_KEY_EMAIL = 'email';
+export const STORAGE_KEY_USER_ID = 'userId';
+export const STORAGE_KEY_TIMEZONE = 'timezone';
+export const STORAGE_KEY_LOCALE = 'locale';
+export const STORAGE_KEY_KEEP_LOGGED = 'keepLogged';
+export const STORAGE_KEY_USER = 'user';
+export const STORAGE_KEY_COMPANY = 'company';

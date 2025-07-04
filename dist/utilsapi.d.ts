@@ -1,0 +1,13 @@
+import * as jose from 'jose';
+export declare const REACT_APP_API_URL: string | undefined, REACT_APP_TOTALDOCS_CORE_API_URL: string | undefined;
+export declare const handleRetry: (fn: () => Promise<any>, retries?: number) => Promise<any>;
+export declare const decodeToken: (token: string) => jose.JWTPayload | null;
+export declare const isExpiredToken: () => boolean | 0;
+export declare const isAuth: () => boolean;
+export declare const isAdminAuth: () => boolean;
+export declare const isAttendantAuth: () => boolean;
+export declare const isFirstLogin: () => boolean;
+export declare const storageToken: (token: string) => void;
+export declare const handleRemoveStorage: () => void;
+export declare const logout: () => void;
+export declare const getToken: () => string | null;
