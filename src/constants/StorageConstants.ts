@@ -1,0 +1,1 @@
+export const SESSION_TOTAL_DOCS = "sessionTotalDocs";

@@ -14,6 +14,7 @@ import {
   STORAGE_KEY_USER_ID,
 } from './constants/api.js'
 import { AxiosError } from 'axios'
+import {getCompanyName} from './services/totalbot/totalbotservice.js'
 
 
 const MAX_RETRIES = 3
@@ -110,11 +111,14 @@ export const isFirstLogin = () => {
   return decodedToken?.firstLogin === 'true'
 }
 
-export const storageToken = (token: string) => {
+export const storageToken = async (token: string) => {
   const decodedToken = decodeToken(token)
 
   if (!decodedToken) return
 
+  const componayName = await getCompanyName();
+
+  localStorage.setItem(STORAGE_KEY_COMPANY,componayName);
   localStorage.setItem(STORAGE_KEY_LOCALE, decodedToken?.locale?.toString() as string)
   localStorage.setItem(STORAGE_KEY_TOKEN, token)
   localStorage.setItem(STORAGE_KEY_USER_EXP, decodedToken?.exp?.toString() as string)
