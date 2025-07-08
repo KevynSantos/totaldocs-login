@@ -131,12 +131,9 @@ export const storageToken = async (token: string) => {
   localStorage.setItem(STORAGE_KEY_TIMEZONE, decodedToken?.timezone?.toString() as string)
 }
 
-export const login = (token: string) => {
-  
+export const login = async (token: string) => {
   localStorage.setItem(SESSION_TOTAL_DOCS, token);
   newToken();
-
-
 }
 
 export const handleRemoveStorage = () => {
