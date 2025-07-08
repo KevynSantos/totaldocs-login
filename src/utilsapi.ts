@@ -1,5 +1,5 @@
 import * as jose from 'jose'
-import { refreshToken } from './auth.js'
+import { newToken, refreshToken } from './auth.js'
 import {
   STORAGE_KEY_COMPANY,
   STORAGE_KEY_EMAIL,
@@ -15,6 +15,7 @@ import {
 } from './constants/api.js'
 import { AxiosError } from 'axios'
 import {getCompanyName} from './services/totalbot/totalbotservice.js'
+import {SESSION_TOTAL_DOCS} from './constants/StorageConstants.js'
 
 
 const MAX_RETRIES = 3
@@ -46,7 +47,7 @@ export const decodeToken = (token: string) => {
   }
 }
 
-export const isExpiredToken = () => {
+export const isExpiredToken = async () => {
   const userExp =
     localStorage.getItem(STORAGE_KEY_USER_EXP) || sessionStorage.getItem(STORAGE_KEY_USER_EXP)
   if (!userExp) {
@@ -64,7 +65,7 @@ export const isExpiredToken = () => {
   }
 
   if (checkFiveMinutesBeforeExp()) {
-    refreshToken()
+    await refreshToken()
   }
 
   return isExpired
@@ -82,12 +83,12 @@ const checkFiveMinutesBeforeExp = () => {
   return isFiveMinutesBeforeExp
 }
 
-export const isAuth = () => {
-  return !!getToken() && !isExpiredToken()
-}
+export const isAuth = async () => {
+  return !!getTokenTotalBot() && !await isExpiredToken();
+};
 
 export const isAdminAuth = () => {
-  const token = getToken()
+  const token = getTokenTotalBot()
   const decodedToken = decodeToken(token as string)
 
   if (!decodedToken) return false
@@ -95,7 +96,7 @@ export const isAdminAuth = () => {
 }
 
 export const isAttendantAuth = () => {
-  const token = getToken()
+  const token = getTokenTotalBot()
   const decodedToken = decodeToken(token as string)
 
   if (!decodedToken) return false
@@ -104,7 +105,7 @@ export const isAttendantAuth = () => {
 
 // TODO: pegar do localStorage ou decodificar o token?
 export const isFirstLogin = () => {
-  const token = getToken()
+  const token = getTokenTotalBot()
   const decodedToken = decodeToken(token as string)
 
   if (!decodedToken) return false
@@ -130,10 +131,19 @@ export const storageToken = async (token: string) => {
   localStorage.setItem(STORAGE_KEY_TIMEZONE, decodedToken?.timezone?.toString() as string)
 }
 
+export const login = (token: string) => {
+  
+  localStorage.setItem(SESSION_TOTAL_DOCS, token);
+  newToken();
+
+
+}
+
 export const handleRemoveStorage = () => {
   const keepLogged = localStorage.getItem(STORAGE_KEY_KEEP_LOGGED) === 'true'
 
   localStorage.removeItem(STORAGE_KEY_TOKEN)
+  localStorage.removeItem(SESSION_TOTAL_DOCS)
   localStorage.removeItem(STORAGE_KEY_USER_EXP)
   localStorage.removeItem(STORAGE_KEY_EMAIL)
   localStorage.removeItem(STORAGE_KEY_ID_EMPRESA)
@@ -154,8 +164,19 @@ export const logout = () => {
   window.location.href = '/'
 }
 
-export const getToken = () => {
+export const getTokenTotalBot = () => {
   const token = localStorage.getItem(STORAGE_KEY_TOKEN) || sessionStorage.getItem(STORAGE_KEY_TOKEN)
+
+  if (!token) {
+    handleRemoveStorage()
+    return null
+  }
+
+  return token
+}
+
+export const getTokenTotalDocs = () => {
+  const token = localStorage.getItem(SESSION_TOTAL_DOCS) || sessionStorage.getItem(SESSION_TOTAL_DOCS)
 
   if (!token) {
     handleRemoveStorage()

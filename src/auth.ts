@@ -1,9 +1,10 @@
 import axios from 'axios'
 import {
-  getToken,
+  getTokenTotalBot,
   handleRemoveStorage,
   handleRetry,
   storageToken,
+  getTokenTotalDocs
 } from './utilsapi.js'
 import { AUTHENTICATE, GET_ME, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
 import {  REACT_APP_API_URL,
@@ -30,7 +31,23 @@ export const handleLogin = async (
 }
 
 export const refreshToken = async () => {
-  const token = getToken()
+  const token = getTokenTotalBot()
+  const url = `${REACT_APP_API_URL + REFRESH_TOKEN}`
+
+  return handleRetry(async () => {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const newToken = response.data.token
+    storageToken(newToken)
+    return response.data
+  })
+}
+
+export const newToken = async () => {
+  const token = getTokenTotalDocs()
   const url = `${REACT_APP_API_URL + REFRESH_TOKEN}`
 
   return handleRetry(async () => {
