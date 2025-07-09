@@ -139,6 +139,11 @@ export const login = async (username: string,password: string, business: string)
   await setUserPermissions();
 }
 
+export const refreshUserPermissions = async () =>
+{
+  await setUserPermissions();
+}
+
 export const handleRemoveStorage = () => {
   const keepLogged = localStorage.getItem(STORAGE_KEY_KEEP_LOGGED) === 'true'
 

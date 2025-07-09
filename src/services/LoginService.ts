@@ -29,6 +29,12 @@ export const getUser = async () =>
 
 export const setUserPermissions = async () => {
     const token = StorageService.get(SESSION_TOTAL_DOCS);
+
+    if(!token)
+    {
+        return;
+    }
+
     const api = new ApiService();
     let response = null;
 
