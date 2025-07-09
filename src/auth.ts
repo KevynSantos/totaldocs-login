@@ -9,6 +9,8 @@ import {
 import { AUTHENTICATE, GET_ME, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
 import {  REACT_APP_API_URL,
   REACT_APP_TOTALDOCS_CORE_API_URL} from './config.js'
+import ApiService
+ from './services/ApiService.js'
 
 export const handleLogin = async (
   company: string,
@@ -44,6 +46,30 @@ export const refreshToken = async () => {
     storageToken(newToken)
     return response.data
   })
+}
+
+export const authenticate = async (username:string,password:string,business:string) => {
+    const api = new ApiService();
+    var response = null;
+    var status = "success";
+    try 
+    {
+        const data = await api.post(AUTHENTICATE,{username: username, password: password, company: business});
+        const res = JSON.stringify(data);
+        const json = JSON.parse(res);
+        const token = json.token;
+        response = token;
+    } catch (error) {
+        response = error;
+        status = "error";
+    }
+
+    const res = {
+      status:status,
+      data:response
+    }
+
+    return res;
 }
 
 export const newToken = async () => {

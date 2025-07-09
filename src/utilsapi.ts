@@ -1,5 +1,5 @@
 import * as jose from 'jose'
-import { newToken, refreshToken } from './auth.js'
+import { newToken, refreshToken,authenticate } from './auth.js'
 import {
   STORAGE_KEY_COMPANY,
   STORAGE_KEY_EMAIL,
@@ -131,9 +131,11 @@ export const storageToken = async (token: string) => {
   localStorage.setItem(STORAGE_KEY_TIMEZONE, decodedToken?.timezone?.toString() as string)
 }
 
-export const login = async (token: string) => {
+export const login = async (username: string,password: string, business: string) => {
+  const res = await authenticate(username,password,business);
+  const token = res.data;
   localStorage.setItem(SESSION_TOTAL_DOCS, token);
-  newToken();
+  await newToken();
 }
 
 export const handleRemoveStorage = () => {
