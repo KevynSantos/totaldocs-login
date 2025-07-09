@@ -16,7 +16,7 @@ import {
 import { AxiosError } from 'axios'
 import {getCompanyName} from './services/totalbot/totalbotservice.js'
 import {SESSION_TOTAL_DOCS} from './constants/StorageConstants.js'
-
+import {setUserPermissions} from './services/LoginService'
 
 const MAX_RETRIES = 3
 const RETRY_DELAY = 10000
@@ -136,6 +136,7 @@ export const login = async (username: string,password: string, business: string)
   const token = res.data;
   localStorage.setItem(SESSION_TOTAL_DOCS, token);
   await newToken();
+  await setUserPermissions();
 }
 
 export const handleRemoveStorage = () => {

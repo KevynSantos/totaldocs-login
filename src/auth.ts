@@ -102,16 +102,3 @@ export const recoverPassword = async (username: string, email: string, company: 
   })
 }
 
-export const getUserPermissions = async () => {
-  const token = getTokenTotalBot()
-  const url = `${REACT_APP_TOTALDOCS_CORE_API_URL + GET_ME}`
-
-  return handleRetry(async () => {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return response.data
-  })
-}
