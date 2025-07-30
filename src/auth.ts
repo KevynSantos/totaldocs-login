@@ -50,7 +50,7 @@ export const refreshToken = async () => {
 
 export const loginTotalDocsOld = async (username:string,password:string,business:string) => {
   try {
-    const api = new ApiService(REACT_APP_TOTALDOCS_CORE_API_URL);
+    const api = new ApiService(location.origin);
 
     await api.get(`${TOTAL_DOCS_LOGIN_OLD}?nomeEmpresa=${business}&usuario=${username}&senha=${password}`);
 
