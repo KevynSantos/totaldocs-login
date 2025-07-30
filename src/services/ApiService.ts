@@ -5,7 +5,7 @@ import { REACT_APP_TOTALDOCS_CORE_API_URL } from '../config';
 class ApiService {
   private api: AxiosInstance;
 
-   constructor(baseURL: string = REACT_APP_TOTALDOCS_CORE_API_URL) {
+   constructor(baseURL: string = location.origin) {
 
     this.api = axios.create({
       baseURL,
