@@ -31,13 +31,13 @@ export const getUser = async () =>
 export const checkLoginInPlatforms = async (username:string,password:string,business:string) => {
 
     type UserPermissions = {
-        totaldocs: {
-            has: boolean;
+        TotalDocs: {
+            repository: boolean;
         };
     };
 
     const permissions = StorageService.get(PERMISSIONS_USER) as UserPermissions;
-    if(permissions.totaldocs.has)
+    if(permissions.TotalDocs.repository)
     {
         await loginTotalDocsOld(username,password,business);
     }
