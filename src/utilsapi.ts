@@ -1,5 +1,5 @@
 import * as jose from 'jose'
-import { newToken, refreshToken, authenticate } from './auth.js'
+import { newToken, refreshToken, authenticate, loginTotalDocsOld } from './auth.js'
 import {
   STORAGE_KEY_COMPANY,
   STORAGE_KEY_EMAIL,
@@ -15,8 +15,8 @@ import {
 } from './constants/api.js'
 import { AxiosError } from 'axios'
 import { getCompanyName } from './services/totalbot/totalbotservice.js'
-import { SESSION_TOTAL_DOCS } from './constants/StorageConstants.js'
-import { setUserPermissions } from './services/LoginService'
+import { PERMISSIONS_USER, SESSION_TOTAL_DOCS } from './constants/StorageConstants.js'
+import { setUserPermissions, checkLoginInPlatforms } from './services/LoginService'
 
 const MAX_RETRIES = 3
 const RETRY_DELAY = 10000
@@ -108,6 +108,10 @@ export const isAttendantAuth = () => {
   return decodedToken?.role === 'attendant' && isAuth()
 }
 
+export const doLoginTotalDocsOld = async (username:string,password:string,business:string) => {
+  await loginTotalDocsOld(username,password,business);
+}
+
 export const isFirstLogin = () => {
   const token = getTokenTotalBot()
   const decodedToken = decodeToken(token as string)
@@ -140,6 +144,7 @@ export const login = async (username: string, password: string, business: string
   localStorage.setItem(SESSION_TOTAL_DOCS, token)
   await newToken()
   await setUserPermissions()
+  await checkLoginInPlatforms(username, password, business)
 }
 
 export const refreshUserPermissions = async () => {

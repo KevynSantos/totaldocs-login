@@ -8,7 +8,7 @@ import {
 } from './utilsapi.js'
 import { AUTHENTICATE, GET_ME, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
 import {  REACT_APP_API_URL,
-  REACT_APP_TOTALDOCS_CORE_API_URL} from './config.js'
+  REACT_APP_TOTALDOCS_CORE_API_URL,TOTAL_DOCS_OLD} from './config.js'
 import ApiService
  from './services/ApiService.js'
 
@@ -46,6 +46,17 @@ export const refreshToken = async () => {
     storageToken(newToken)
     return response.data
   })
+}
+
+export const loginTotalDocsOld = async (username:string,password:string,business:string) => {
+  try {
+    const api = new ApiService();
+
+    await api.get(`${TOTAL_DOCS_OLD}?nomeEmpresa=${business}&usuario=${username}&senha=${password}`);
+
+  } catch (err) {
+    console.error('Erro ao fazer login ou buscar sessão:', err);
+  }
 }
 
 export const authenticate = async (username:string,password:string,business:string) => {

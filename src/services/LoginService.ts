@@ -2,6 +2,7 @@ import StorageService from "../storage/StorageService";
 import { SESSION_TOTAL_DOCS, PERMISSIONS_USER } from "../constants/StorageConstants";
 import ApiService from '../services/ApiService';
 import {GET_ME} from '../api/urls';
+import {loginTotalDocsOld} from '../auth'
 
 export const getUser = async () =>
 {
@@ -24,6 +25,22 @@ export const getUser = async () =>
     }
 
     return response;
+
+}
+
+export const checkLoginInPlatforms = async (username:string,password:string,business:string) => {
+
+    type UserPermissions = {
+        totaldocs: {
+            has: boolean;
+        };
+    };
+
+    const permissions = StorageService.get(PERMISSIONS_USER) as UserPermissions;
+    if(permissions.totaldocs.has)
+    {
+        await loginTotalDocsOld(username,password,business);
+    }
 
 }
 
