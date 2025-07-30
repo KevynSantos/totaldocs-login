@@ -2,15 +2,21 @@
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { REACT_APP_TOTALDOCS_CORE_API_URL } from '../config';
+import https from 'https';
 class ApiService {
   private api: AxiosInstance;
 
-  constructor(baseURL: string = REACT_APP_TOTALDOCS_CORE_API_URL) {
+   constructor(baseURL: string = REACT_APP_TOTALDOCS_CORE_API_URL, rejectUnauthorized: boolean = true) {
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: rejectUnauthorized,
+    });
+
     this.api = axios.create({
       baseURL,
       headers: {
         'Content-Type': 'application/json',
       },
+      httpsAgent, // só é usado em ambiente Node
     });
   }
 
