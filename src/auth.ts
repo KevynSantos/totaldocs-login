@@ -6,8 +6,8 @@ import {
   storageToken,
   getTokenTotalDocs
 } from './utilsapi.js'
-import { AUTHENTICATE, GET_ME, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
-import {TOTAL_DOCS_LOGIN_OLD} from './config.js'
+import { AUTHENTICATE, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
+import {TOTAL_DOCS_LOGIN_OLD,REACT_APP_TOTALDOCS_CORE_API_URL} from './config.js'
 import ApiService
  from './services/ApiService.js'
 
@@ -18,7 +18,7 @@ export const handleLogin = async (
   userType: string,
 ) => {
   handleRemoveStorage()
-  const url = location.origin+`${AUTHENTICATE}`
+  const url = location.origin+REACT_APP_TOTALDOCS_CORE_API_URL+`${AUTHENTICATE}`
 
   return handleRetry(async () => {
     const response = await axios.post(url, {
@@ -33,7 +33,7 @@ export const handleLogin = async (
 
 export const refreshToken = async () => {
   const token = getTokenTotalBot()
-  const url = location.origin+`${REFRESH_TOKEN}`
+  const url = location.origin+REACT_APP_TOTALDOCS_CORE_API_URL+`${REFRESH_TOKEN}`
 
   return handleRetry(async () => {
     const response = await axios.get(url, {
@@ -59,12 +59,12 @@ export const loginTotalDocsOld = async (username:string,password:string,business
 }
 
 export const authenticate = async (username:string,password:string,business:string) => {
-    const api = new ApiService();
+    const api = new ApiService(location.origin);
     var response = null;
     var status = "success";
     try 
     {
-        const data = await api.post(AUTHENTICATE,{username: username, password: password, company: business});
+        const data = await api.post(REACT_APP_TOTALDOCS_CORE_API_URL+AUTHENTICATE,{username: username, password: password, company: business});
         const res = JSON.stringify(data);
         const json = JSON.parse(res);
         const token = json.token;
@@ -84,7 +84,7 @@ export const authenticate = async (username:string,password:string,business:stri
 
 export const newToken = async () => {
   const token = getTokenTotalDocs()
-  const url = location.origin+`${REFRESH_TOKEN}`
+  const url = location.origin+REACT_APP_TOTALDOCS_CORE_API_URL+`${REFRESH_TOKEN}`
 
   return handleRetry(async () => {
     const response = await axios.get(url, {
@@ -100,7 +100,7 @@ export const newToken = async () => {
 
 export const recoverPassword = async (username: string, email: string, company: string) => {
   handleRemoveStorage()
-  const url = location.origin+`${RECOVER_PASSWORD}`
+  const url = location.origin+REACT_APP_TOTALDOCS_CORE_API_URL+`${RECOVER_PASSWORD}`
 
   return handleRetry(async () => {
     const response = await axios.post(url, {
