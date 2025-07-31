@@ -3,6 +3,7 @@ import { SESSION_TOTAL_DOCS, PERMISSIONS_USER } from "../constants/StorageConsta
 import ApiService from '../services/ApiService';
 import {GET_ME} from '../api/urls';
 import {loginTotalDocsOld} from '../auth'
+import {REACT_APP_TOTALDOCS_CORE_API_URL} from '../config'
 
 export const getUser = async () =>
 {
@@ -12,7 +13,7 @@ export const getUser = async () =>
         var response = null;
         try 
     {
-        const data = await api.get(GET_ME, {
+        const data = await api.get(REACT_APP_TOTALDOCS_CORE_API_URL+GET_ME, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -56,7 +57,7 @@ export const setUserPermissions = async () => {
     let response = null;
 
     try {
-        const data = await api.get(GET_ME, {
+        const data = await api.get(REACT_APP_TOTALDOCS_CORE_API_URL+GET_ME, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
