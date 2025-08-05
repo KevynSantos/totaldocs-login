@@ -7,7 +7,7 @@ import {
   getTokenTotalDocs
 } from './utilsapi.js'
 import { AUTHENTICATE, RECOVER_PASSWORD, REFRESH_TOKEN } from './api/urls.js'
-import {TOTAL_DOCS_LOGIN_OLD,REACT_APP_TOTALDOCS_CORE_API_URL} from './config.js'
+import {TOTAL_DOCS_LOGIN_OLD,REACT_APP_TOTALDOCS_CORE_API_URL,TOTAL_DOCS_LOGOUT_OLD} from './config.js'
 import ApiService
  from './services/ApiService.js'
 
@@ -45,6 +45,18 @@ export const refreshToken = async () => {
     storageToken(newToken)
     return response.data
   })
+}
+
+export const logoutTotalDocsOld = async() =>
+{
+  try {
+    const api = new ApiService(location.origin);
+
+    await api.get(TOTAL_DOCS_LOGOUT_OLD);
+
+  } catch (err) {
+    console.error('Erro ao fazer logout ou buscar sessão:', err);
+  }
 }
 
 export const loginTotalDocsOld = async (username:string,password:string,business:string) => {

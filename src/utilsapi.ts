@@ -16,7 +16,7 @@ import {
 import { AxiosError } from 'axios'
 import { getCompanyName } from './services/totalbot/totalbotservice.js'
 import { PERMISSIONS_USER, SESSION_TOTAL_DOCS } from './constants/StorageConstants.js'
-import { setUserPermissions, checkLoginInPlatforms } from './services/LoginService'
+import { setUserPermissions, checkLoginInPlatforms, doLogoutTotalDocsOld } from './services/LoginService'
 
 const MAX_RETRIES = 3
 const RETRY_DELAY = 10000
@@ -170,9 +170,10 @@ export const handleRemoveStorage = () => {
   }
 }
 
-export const logout = () => {
-  handleRemoveStorage()
-  window.location.href = '/'
+export const logout = async () => {
+  handleRemoveStorage();
+  await doLogoutTotalDocsOld();
+  window.location.href = '/';
 }
 
 export const getTokenTotalBot = () => {

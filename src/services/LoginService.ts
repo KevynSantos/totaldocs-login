@@ -2,7 +2,7 @@ import StorageService from "../storage/StorageService";
 import { SESSION_TOTAL_DOCS, PERMISSIONS_USER } from "../constants/StorageConstants";
 import ApiService from '../services/ApiService';
 import {GET_ME} from '../api/urls';
-import {loginTotalDocsOld} from '../auth'
+import {loginTotalDocsOld,logoutTotalDocsOld} from '../auth'
 import {REACT_APP_TOTALDOCS_CORE_API_URL} from '../config'
 
 export const getUser = async () =>
@@ -27,6 +27,11 @@ export const getUser = async () =>
 
     return response;
 
+}
+
+export const doLogoutTotalDocsOld = async() =>
+{
+    await logoutTotalDocsOld();
 }
 
 export const checkLoginInPlatforms = async (username:string,password:string,business:string) => {
